@@ -3,6 +3,7 @@ import java.net.*;
 
 public class InetClient {
     public static void main(String args[]) {
+        // read argument from user to set ServerName. If not specified use localhost
         String serverName;
         if (args.length < 1) {
             serverName = "localhost";
@@ -10,15 +11,18 @@ public class InetClient {
             serverName = args[0];
         }
 
-        System.out.println("Clark Elliott's Inet Client, 1.8\n");
+        System.out.println("B. Reinhard Inet Client, 1.8\n");
         System.out.println("Using Server: " + serverName + ", Port: 1565");
+        // Makes an input reader
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         try {
             String name;
             do {
                 System.out.print("Enter a hostname or an IP address, (quit to end): ");
                 System.out.flush();
+                // read in name to send to server
                 name = in.readLine();
+                // if it doesn't equal quit call getRemoteAddress
                 if (name.indexOf("quit") < 0) {
                     getRemoteAddress(name, serverName);
                 }
@@ -28,6 +32,7 @@ public class InetClient {
         }
     }
 
+    // pretty print method
     static String toText(byte ip[]) {
         StringBuffer result = new StringBuffer();
         for (int i = 0; i < ip.length; ++i) {
