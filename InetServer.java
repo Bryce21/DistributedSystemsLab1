@@ -19,7 +19,7 @@ public class InetServer {
          */
         while (true) {
             // ServerSocket is actively hit and creates a socket from the client request.
-            // Pass that to
+            // Pass that to worker
             sock = servsock.accept();
             new Worker(sock).start();
         }

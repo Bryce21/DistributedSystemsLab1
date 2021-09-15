@@ -44,23 +44,39 @@ public class InetClient {
     }
 
     static void getRemoteAddress(String name, String serverName) {
+        // initialize variables. Sock will be established socket connection
+        // BufferedRead to get data from server - made from socket stream
+        // Stream to send data to server - made from socket
         Socket sock;
         BufferedReader fromServer;
         PrintStream toServer;
         String textFromServer;
 
         try {
+            // Socket pointing to serverName: 1565
             sock = new Socket(serverName, 1565);
+            // Stream reader to read response from server. Using established socket
             fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            // Stream writer pointing to server
             toServer = new PrintStream(sock.getOutputStream());
+            // Write the name to lookup
             toServer.println(name);
+            // flush the stream - no values inside the stream
             toServer.flush();
+            // read three lines from the server to match the three lines of expected.
+            // print response out
+            // response:
+            // Looking up name: google.com
+            // Host name: google.com
+            // Host IP: 555.555.555.555
+
             for (int i = 1; i <= 3; i++) {
                 textFromServer = fromServer.readLine();
                 if (textFromServer != null) {
                     System.out.println(textFromServer);
                 }
             }
+            // Close the socket - request is done
             sock.close();
         } catch (IOException x) {
             System.out.println("Socket error.");
